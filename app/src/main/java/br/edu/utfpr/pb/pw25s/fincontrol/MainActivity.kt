@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         db = DatabaseHandler(this)
 
-        if( intent.getIntExtra("id", 0) != 0 ) {
+        if( intent.getIntExtra("cod", 0) != 0 ) {
             spEntryType.setSelection(intent.getIntExtra("entryType", 0))
             spDescriptions.setSelection(intent.getIntExtra("description", 0))
             etDate.setText(intent.getStringExtra("date"))
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         spEntryType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if( spEntryType.selectedItem.toString() == "Receita" ) {
                     spDescriptions.adapter = ArrayAdapter.createFromResource(this@MainActivity, R.array.descriptions_income, android.R.layout.simple_list_item_1)
                 } else {
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
                 // write code to perform some action
             }
         }
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         val date = etDate.text.toString()
         val value = etValue.text.toString().toDouble()
 
-        if( intent.getIntExtra("id", 0) != 0 ) {
+        if( intent.getIntExtra("cod", 0) != 0 ) {
             db.update(
                 Logbook(
                     intent.getIntExtra("id", 0),
