@@ -2,6 +2,7 @@ package br.edu.utfpr.pb.pw25s.fincontrol.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import br.edu.utfpr.pb.pw25s.fincontrol.entity.Logbook
@@ -39,7 +40,7 @@ class DatabaseHandler (context : Context) : SQLiteOpenHelper( context, DATABASE_
         value.put( "value", logbook.value )
         value.put( "date", logbook.date )
 
-        db.update( TABLE_NAME, value, "_id=${logbook._id}", null )
+        db.update( TABLE_NAME, value, "_id=${logbook.id}", null )
     }
 
     fun delete( id : Int ) {
@@ -85,20 +86,37 @@ class DatabaseHandler (context : Context) : SQLiteOpenHelper( context, DATABASE_
         while (cursor.moveToNext()) {
             logbooks.add(
                 Logbook(
-                    cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getDouble(3),
-                    cursor.getString(4)
+                    cursor.getInt(ID),
+                    cursor.getString(TYPE),
+                    cursor.getString(DESCRIPTION),
+                    cursor.getDouble(VALUE),
+                    cursor.getString(DATE)
                 )
             )
         }
+
         return logbooks
+    }
+
+    fun listCursor() : Cursor {
+        val db = this.writableDatabase
+        return db.query(TABLE_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null)
     }
 
     companion object {
         private const val DATABASE_NAME = "fin_control.sqlite"
         private const val DATABASE_VERSION = 3
         private const val TABLE_NAME = "cadastro"
+        public const val ID = 0
+        public const val TYPE = 1
+        public const val DESCRIPTION = 2
+        public const val VALUE = 3
+        public const val DATE = 4
     }
 }
