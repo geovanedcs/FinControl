@@ -34,6 +34,6 @@
         android:onClick="fabShowBalanceOnClick"
         app:layout_constraintBottom_toTopOf="@+id/btAddEntry"
         app:layout_constraintEnd_toEndOf="@+id/btAddEntry"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/income" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
