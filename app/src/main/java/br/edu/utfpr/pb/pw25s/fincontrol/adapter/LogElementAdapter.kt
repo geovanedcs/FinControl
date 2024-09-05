@@ -55,19 +55,31 @@ class LogElementAdapter(val context: Context, val cursor: Cursor) : BaseAdapter(
         val tvDateView = view.findViewById<TextView>(R.id.tvDateView)
         val imageView = view.findViewById<ImageView>(R.id.imageView)
         val ibEdit = view.findViewById<ImageView>(R.id.ibEdit)
-        val ibDelete = view.findViewById<ImageView>(R.id.ibDelete)
 
         cursor.moveToPosition(position)
 
         tvDescriptionView.setText((cursor.getString(DESCRIPTION)))
         tvValueView.setText(formatToBRL(cursor.getDouble(VALUE)))
         tvDateView.setText(cursor.getString(DATE))
-        if(cursor.getString(TYPE) == "Receita")
-            imageView.setImageResource(R.drawable.income)
-        else
-            imageView.setImageResource(R.drawable.expense)
+        if(cursor.getString(TYPE) == "Receita"){
+            val sgv = when (cursor.getString(DESCRIPTION)){
+                "Doação/Presente" -> R.drawable.donation
+                "Salário" -> R.drawable.salary
+                else -> R.drawable.extras
+            }
+            imageView.setImageResource(sgv)
+        } else {
+            val sgv = when (cursor.getString(DESCRIPTION)){
+                "Alimentação" -> R.drawable.food
+                "Entretenimento" -> R.drawable.entertainment
+                "Moradia" -> R.drawable.home
+                "Saúde" -> R.drawable.health
+                else -> R.drawable.transport
+            }
+            imageView.setImageResource(sgv)
+        }
 
-        ibEdit.setOnClickListener{
+        imageView.setOnClickListener{
             val intent = Intent(context, MainActivity::class.java)
 
             cursor.moveToPosition(position)
@@ -80,12 +92,17 @@ class LogElementAdapter(val context: Context, val cursor: Cursor) : BaseAdapter(
             context.startActivity(intent)
         }
 
-        ibDelete.setOnClickListener{
+        ibEdit.setOnClickListener{
+            val intent = Intent(context, MainActivity::class.java)
+
             cursor.moveToPosition(position)
-            val id = cursor.getInt(ID)
-            val db = DatabaseHandler(context)
-            db.delete(id)
-            notifyDataSetChanged()
+
+            intent.putExtra("cod", cursor.getInt(ID))
+            intent.putExtra("type", cursor.getString(TYPE))
+            intent.putExtra("description", cursor.getString(DESCRIPTION))
+            intent.putExtra("value", cursor.getDouble(VALUE))
+            intent.putExtra("date", cursor.getString(DATE))
+            context.startActivity(intent)
         }
 
         return view

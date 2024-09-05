@@ -13,7 +13,9 @@
         android:layout_height="80dp"
         android:layout_margin="16dp"
         android:padding="16dp"
+        android:clickable="true"
         android:src="@drawable/ic_launcher_foreground"
+        android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,20 +43,10 @@
         android:layout_height="30dp"
         android:layout_marginEnd="16dp"
         android:onClick="ibEditOnClick"
+        app:layout_constraintBottom_toBottomOf="@+id/tvValueView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvDescriptionView"
         app:srcCompat="@android:drawable/ic_menu_edit" />
-
-    <ImageButton
-        android:id="@+id/ibDelete"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="16dp"
-        android:onClick="ibDeleteOnClick"
-        app:layout_constraintEnd_toEndOf="@+id/ibEdit"
-        app:layout_constraintStart_toStartOf="@+id/ibEdit"
-        app:layout_constraintTop_toBottomOf="@+id/ibEdit"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
 
     <TextView
         android:id="@+id/tvDateView"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="descriptions_income">
-        <item>Extras</item>
         <item>Doação/Presente</item>
+        <item>Extras</item>
         <item>Salário</item>
     </string-array>
 </resources>

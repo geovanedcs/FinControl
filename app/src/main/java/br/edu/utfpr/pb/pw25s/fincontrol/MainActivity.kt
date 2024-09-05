@@ -14,6 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.edu.utfpr.pb.pw25s.fincontrol.database.DatabaseHandler
 import br.edu.utfpr.pb.pw25s.fincontrol.entity.Logbook
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spDescriptions: Spinner
     private lateinit var etDate: EditText
     private lateinit var etValue: EditText
+    private lateinit var fabDelete: FloatingActionButton
 
     private lateinit var db :DatabaseHandler
 
@@ -32,8 +35,11 @@ class MainActivity : AppCompatActivity() {
         spDescriptions = findViewById(R.id.spDescriptions)
         etDate = findViewById(R.id.etDate)
         etValue = findViewById(R.id.etValue)
+        fabDelete = findViewById(R.id.fabDelete)
 
         db = DatabaseHandler(this)
+
+        fabDelete.visibility = if( intent.getIntExtra("cod", 0) != 0 ) View.VISIBLE else View.GONE
 
         if( intent.getIntExtra("cod", 0) != 0 ) {
             spEntryType.setSelection(intent.getIntExtra("entryType", 0))
@@ -89,18 +95,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ibCalendarOnClick(view: View) {
-        val date = etDate.text.toString().split("/")
-        val day = date[0].toInt()
-        val month = date[1].toInt() - 1
-        val year = date[2].toInt()
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val dpd = DatePickerDialog(this, { view, year, monthOfYear, dayOfMonth ->
-            etDate.setText("$dayOfMonth/${monthOfYear + 1}/$year")
+        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            etDate.setText("$dayOfMonth/${monthOfYear+1}/$year")
         }, year, month, day)
+
         dpd.show()
     }
 
     fun btCancelOnClick(view: View) {
+        finish()
+    }
+
+    fun fabDeleteOnClick(view: View) {
+        db.delete(intent.getIntExtra("cod", 0))
         finish()
     }
 
