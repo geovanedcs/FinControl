@@ -103,6 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Cancelar"
+        android:onClick="btCancelOnClick"
         app:layout_constraintStart_toEndOf="@+id/btSalvar"
         app:layout_constraintTop_toTopOf="@+id/btSalvar" />
 

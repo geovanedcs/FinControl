@@ -18,6 +18,8 @@ import br.edu.utfpr.pb.pw25s.fincontrol.database.DatabaseHandler.Companion.TYPE
 import br.edu.utfpr.pb.pw25s.fincontrol.database.DatabaseHandler.Companion.DESCRIPTION
 import br.edu.utfpr.pb.pw25s.fincontrol.database.DatabaseHandler.Companion.DATE
 import br.edu.utfpr.pb.pw25s.fincontrol.database.DatabaseHandler.Companion.VALUE
+import java.text.NumberFormat
+import java.util.Locale
 
 
 class LogElementAdapter(val context: Context, val cursor: Cursor) : BaseAdapter() {
@@ -58,7 +60,7 @@ class LogElementAdapter(val context: Context, val cursor: Cursor) : BaseAdapter(
         cursor.moveToPosition(position)
 
         tvDescriptionView.setText((cursor.getString(DESCRIPTION)))
-        tvValueView.setText(cursor.getDouble(VALUE).toString())
+        tvValueView.setText(formatToBRL(cursor.getDouble(VALUE)))
         tvDateView.setText(cursor.getString(DATE))
         if(cursor.getString(TYPE) == "Receita")
             imageView.setImageResource(R.drawable.income)
@@ -87,6 +89,12 @@ class LogElementAdapter(val context: Context, val cursor: Cursor) : BaseAdapter(
         }
 
         return view
+    }
+
+    fun formatToBRL (value: Double): String {
+        val locale = Locale("pt", "BR")
+        val currencyFormat = NumberFormat.getCurrencyInstance(locale)
+        return currencyFormat.format(value)
     }
 
 }

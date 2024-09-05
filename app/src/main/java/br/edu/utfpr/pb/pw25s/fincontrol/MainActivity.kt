@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             spEntryType.setSelection(intent.getIntExtra("entryType", 0))
             spDescriptions.setSelection(intent.getIntExtra("description", 0))
             etDate.setText(intent.getStringExtra("date"))
-            etValue.setText(intent.getStringExtra("value"))
+            etValue.setText(intent.getDoubleExtra("value", 0.0).toString())
         }
 
         spEntryType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         if( intent.getIntExtra("cod", 0) != 0 ) {
             db.update(
                 Logbook(
-                    intent.getIntExtra("id", 0),
+                    intent.getIntExtra("cod", 0),
                     entryType,
                     description,
                     value,
@@ -94,10 +94,14 @@ class MainActivity : AppCompatActivity() {
         val month = date[1].toInt() - 1
         val year = date[2].toInt()
 
-        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        val dpd = DatePickerDialog(this, { view, year, monthOfYear, dayOfMonth ->
             etDate.setText("$dayOfMonth/${monthOfYear + 1}/$year")
         }, year, month, day)
         dpd.show()
+    }
+
+    fun btCancelOnClick(view: View) {
+        finish()
     }
 
 

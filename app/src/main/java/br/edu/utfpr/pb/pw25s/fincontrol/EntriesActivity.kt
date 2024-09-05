@@ -2,6 +2,7 @@ package br.edu.utfpr.pb.pw25s.fincontrol
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.utfpr.pb.pw25s.fincontrol.adapter.LogElementAdapter
@@ -12,6 +13,7 @@ class EntriesActivity : AppCompatActivity() {
 
     private lateinit var lvEntry: ListView
     private lateinit var btAddEntry: FloatingActionButton
+    private lateinit var fabShowBalance: FloatingActionButton
 
     private lateinit var db: DatabaseHandler
 
@@ -21,10 +23,15 @@ class EntriesActivity : AppCompatActivity() {
 
         lvEntry = findViewById(R.id.lvEntries)
         btAddEntry = findViewById(R.id.btAddEntry)
+        fabShowBalance = findViewById(R.id.fabShowBalance)
 
         btAddEntry.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        }
+
+        fabShowBalance.setOnClickListener {
+            TODO("Not yet implemented")
         }
 
         db = DatabaseHandler(this)
@@ -36,4 +43,6 @@ class EntriesActivity : AppCompatActivity() {
         val adapter = LogElementAdapter(this, entries)
         lvEntry.adapter = adapter
     }
+
+
 }

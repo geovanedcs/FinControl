@@ -11,7 +11,7 @@ class DatabaseHandler (context : Context) : SQLiteOpenHelper( context, DATABASE_
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL( "CREATE TABLE IF NOT EXISTS $TABLE_NAME ( _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " type TEXT, description TEXT, value DOUBLE, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP )")
+                " type TEXT, description TEXT, value REAL, date TEXT )")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -112,7 +112,7 @@ class DatabaseHandler (context : Context) : SQLiteOpenHelper( context, DATABASE_
     companion object {
         private const val DATABASE_NAME = "fin_control.sqlite"
         private const val DATABASE_VERSION = 3
-        private const val TABLE_NAME = "cadastro"
+        private const val TABLE_NAME = "fin_control"
         public const val ID = 0
         public const val TYPE = 1
         public const val DESCRIPTION = 2
