@@ -98,8 +98,8 @@ class LogElementAdapter(val context: Context, val cursor: Cursor) : BaseAdapter(
             cursor.moveToPosition(position)
 
             intent.putExtra("cod", cursor.getInt(ID))
-            intent.putExtra("type", cursor.getString(TYPE))
-            intent.putExtra("description", cursor.getString(DESCRIPTION))
+            intent.putExtra("type", if(cursor.getString(TYPE) == "Receita") 0 else 1)
+            intent.putExtra("description", descriptionToIndex(cursor.getString(DESCRIPTION)))
             intent.putExtra("value", cursor.getDouble(VALUE))
             intent.putExtra("date", cursor.getString(DATE))
             context.startActivity(intent)
@@ -113,5 +113,25 @@ class LogElementAdapter(val context: Context, val cursor: Cursor) : BaseAdapter(
         val currencyFormat = NumberFormat.getCurrencyInstance(locale)
         return currencyFormat.format(value)
     }
+
+    private fun descriptionToIndex(description: String): Int {
+        if(cursor.getString(TYPE) == "Receita") {
+            return when (description) {
+                "Doação/Presente" -> 0
+                "Extras" -> 1
+                else -> 2
+            }
+        }else{
+            return when (description) {
+                "Alimentação" -> 0
+                "Entretenimento" -> 1
+                "Moradia" -> 2
+                "Saúde" -> 3
+                else -> 4
+            }
+        }
+
+    }
+
 
 }

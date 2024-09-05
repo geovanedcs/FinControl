@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="descriptions_outcome">
+    <string-array name="descriptions_expenses">
         <item>Alimentação</item>
         <item>Entretenimento</item>
         <item>Moradia</item>

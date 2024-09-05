@@ -3,15 +3,11 @@ package br.edu.utfpr.pb.pw25s.fincontrol
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import br.edu.utfpr.pb.pw25s.fincontrol.database.DatabaseHandler
 import br.edu.utfpr.pb.pw25s.fincontrol.entity.Logbook
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         fabDelete.visibility = if( intent.getIntExtra("cod", 0) != 0 ) View.VISIBLE else View.GONE
 
         if( intent.getIntExtra("cod", 0) != 0 ) {
-            spEntryType.setSelection(intent.getIntExtra("entryType", 0))
+            spEntryType.setSelection(intent.getIntExtra("type", 0))
             spDescriptions.setSelection(intent.getIntExtra("description", 0))
             etDate.setText(intent.getStringExtra("date"))
             etValue.setText(intent.getDoubleExtra("value", 0.0).toString())
@@ -53,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 if( spEntryType.selectedItem.toString() == "Receita" ) {
                     spDescriptions.adapter = ArrayAdapter.createFromResource(this@MainActivity, R.array.descriptions_income, android.R.layout.simple_list_item_1)
                 } else {
-                    spDescriptions.adapter = ArrayAdapter.createFromResource(this@MainActivity, R.array.descriptions_outcome, android.R.layout.simple_list_item_1)
+                    spDescriptions.adapter = ArrayAdapter.createFromResource(this@MainActivity, R.array.descriptions_expenses, android.R.layout.simple_list_item_1)
                 }
             }
 
